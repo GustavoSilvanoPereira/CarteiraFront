@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import axios from "axios";
+import api from "../api/api";
+
+type Usuario = {
+  id: number;
+  email: string;
+};
 
 export default function ListarUsuarios() {
-  const [usuarios, setUsuarios] = useState([]);
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
     try {
-      const r = await axios.get("http://SEU_BACKEND/usuarios");
+      const r = await api.get("/usuarios");
       setUsuarios(r.data);
     } catch (e) {
       console.log("Erro ao buscar usuários:", e);

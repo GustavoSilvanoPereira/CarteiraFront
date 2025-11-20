@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import axios from "axios";
+import api from "../api/api";
+
+interface Senha {
+  id: number;
+  servico: string;
+  senha: string;
+}
 
 export default function ListarSenhas() {
-  const [senhas, setSenhas] = useState([]);
+  const [senhas, setSenhas] = useState<Senha[]>([]);
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
     try {
-      const response = await axios.get("http://SEU_BACKEND/senhas");
+      const response = await api.get("/senhas");
       setSenhas(response.data);
     } catch (e) {
       console.log("Erro ao carregar senhas:", e);
@@ -45,7 +51,12 @@ export default function ListarSenhas() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F2F4F7", padding: 20 },
-  title: { fontSize: 22, fontWeight: "600", textAlign: "center", marginBottom: 20 },
+  title: {
+    fontSize: 22,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 20,
+  },
   card: {
     backgroundColor: "#FFF",
     padding: 15,
